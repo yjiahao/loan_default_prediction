@@ -11,7 +11,7 @@ from features import Features
 # to start up the app: uvicorn main:app --reload --port=5000
 # TODOS:
 # see if theres a better solution to shorten the forms input (like create a class or some shit)
-# render different templates when predicting using different models for html
+# beautify the landing page and the prediction page with Bootstrap
 
 # load the models with pickle pip install -U Jinja2
 with open('models.pkl', 'rb') as f:
@@ -25,13 +25,10 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 # set up templating
 templates = Jinja2Templates(directory='templates')
 
+# home route
 @app.get("/")
 async def root(request: Request):
     return templates.TemplateResponse('index.html', {'request': request})
-
-@app.get('/{name}')
-async def welcomel(name: str):
-   return {'Welcome to my model': f'{name}'}
 
 # endpoint for using logistic regression to predict
 @app.post('/log_reg')
@@ -51,7 +48,7 @@ async def testing(
    delinq_2yrs: int = Form(...),
    pub_rec: int = Form(...)
 ):
-   
+   # form fields above, then we create a dictionary that contains the form data passed
    data = {
       "credit_policy": credit_policy,
       "purpose": purpose,
@@ -68,9 +65,12 @@ async def testing(
       "pub_rec": pub_rec
    }
 
+   # convert it into a pandas DataFrame to fit into pipeline
    data = pd.DataFrame(data, index=[0])
 
+   # optimal probability threshold we found
    threshold = 0.5
+
    probability = best_log_reg.predict_proba(data).tolist()[0][1]
    default = (probability > threshold)
    model = 'Logistic Regression'
@@ -80,6 +80,7 @@ async def testing(
    else:
       pred = 'Borrower will not default'
 
+   # return model.html, the request, and information we want to display on the page
    return templates.TemplateResponse(
       name='model.html',
       request=request,
