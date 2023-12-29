@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block content %}
+        <header class="masthead">
+            <div class="container position-relative">
+                <div class="row justify-content-center">
+                    <div class="col-xl-8">
+                        <div class="text-white">
+                            <!-- Page heading-->
+                            <h1 class="mb-5">Type in the features and use any machine learning model</h1>
+                            <!-- to get an API token!-->
+                                <!-- Email address input-->
+                                    <form class="form-subscribe" method="post">
+                                        <div class="form-group">
+                                          <label for="crediyPolicySelect">Credit Policy</label>
+                                          <select name="credit_policy" class="form-control" id="creditPolicySelect">
+                                            <option>0</option>
+                                            <option>1</option>
+                                          </select>
+                                        </div>
+                                        <div class="form-group pt-4" action="/">
+                                            <label for="purpose">Purpose of loan</label>
+                                            <select name="purpose" class="form-control" id="purpose">
+                                              <option>all_other</option>
+                                              <option>credit_card</option>
+                                              <option>debt_consolidation</option>
+                                              <option>educational</option>
+                                              <option>home_improvement</option>
+                                              <option>major_purchase</option>
+                                              <option>small_business</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group pt-4">
+                                            <label for="interestRate">Interest Rate</label>
+                                            <input name="int_rate" type="number" step="0.01" class="form-control" id="interestRate" placeholder="Interest rate at time of purchase">
+                                        </div>
+                                        <div class="form-group pt-4">
+                                            <label for="installmentAmount">Installment Amount</label>
+                                            <input name="installment" type="number" step="0.01" class="form-control" id="installmentAmount" placeholder="Amount for each installment">
+                                        </div>
+                                        <div class="form-group pt-4">
+                                            <label for="logAnnualIncome">Log of Annual Income</label>
+                                            <input name="log_annual_inc" type="number" step="0.00001" class="form-control" id="logAnnualIncome" placeholder="Natural logarithm of annual income">
+                                        </div>
+                                        <div class="form-group pt-4">
+                                            <label for="debtToIncomeRatio">Debt-to-Income Ratio</label>
+                                            <input name="dti" type="number" step="0.01" class="form-control" id="debtToIncomeRatio" placeholder="Debt divided by income">
+                                        </div>
+                                        <div class="form-group pt-4">
+                                            <label for="ficoScore">FICO Score</label>
+                                            <input name="fico" type="number" class="form-control" id="ficoScore" placeholder="FICO score of borrower">
+                                        </div>
+                                        <div class="form-group pt-4">
+                                            <label for="daysWithCRLine">Number of days borrower has had a credit line</label>
+                                            <input name="days_with_cr_line" type="number" class="form-control" id="daysWithCRLine">
+                                        </div>
+                                        <div class="form-group pt-4">
+                                            <label for="revolBal">Borrower's Revolving Balance</label>
+                                            <input name="revol_bal" type="number" class="form-control" id="revolBal">
+                                        </div>
+                                        <div class="form-group pt-4">
+                                            <label for="revolUtil">Borrower's Revolving Line Utilization Rate</label>
+                                            <input name="revol_util" type="number" step="0.00001" class="form-control" id="revolUtil">
+                                        </div>
+                                        <div class="form-group pt-4">
+                                            <label for="inqLast6Mths">Number of Inquiries by Creditors in The Last 6 Months</label>
+                                            <input name="inq_last_6mths" type="number" class="form-control" id="inqLast6Mths">
+                                        </div>
+                                        <div class="form-group pt-4">
+                                            <label for="delinq2yrs">Number of Times Borrower has been 30+ days past due on a payment in the past 2 years</label>
+                                            <input name="delinq_2yrs" type="number" class="form-control" id="delinq2yrs">
+                                        </div>
+                                        <div class="form-group pt-4">
+                                            <label for="pubRec">Borrower's Number of Derogatory Public Records</label>
+                                            <input name="pub_rec" type="number" class="form-control" id="pubRec">
+                                        </div>
+                                        <div class="form-group pt-4">
+                                            <button type="submit" class="btn btn-primary col" formaction="/log_reg">Logistic Regression</button>
+                                            <button type="submit" class="btn btn-primary col" formaction="/rf">Random Forest</button>
+                                            <button type="submit" class="btn btn-primary col" formaction="/knn">K Nearest Neighbours</button>
+                                            <button type="submit" class="btn btn-primary col" formaction="/xgb">XGBoost Classifier</button>
+                                        </div>
+                                    </form>
+                                <!-- Submit success message-->
+                                <!---->
+                                <!-- This is what your users will see when the form-->
+                                <!-- has successfully submitted-->
+                                <div class="d-none" id="submitSuccessMessage">
+                                    <div class="text-center mb-3">
+                                        <div class="fw-bolder">Form submission successful!</div>
+                                        <p>To activate this form, sign up at</p>
+                                        <a class="text-white" href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
+                                    </div>
+                                </div>
+                                <!-- Submit error message-->
+                                <!---->
+                                <!-- This is what your users will see when there is-->
+                                <!-- an error submitting the form-->
+                                <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+{% endblock %}
