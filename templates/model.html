@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+    <p>Probability of default: {{probability}}</p>
+    <p>Probability threshold used: {{threshold}}</p>
+    <p>{{model}} model predicts that: {{pred}}</p>
+</div>
+
+{% endblock %}

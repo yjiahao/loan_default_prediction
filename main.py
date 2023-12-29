@@ -13,7 +13,7 @@ from features import Features
 # see if theres a better solution to shorten the forms input (like create a class or some shit)
 # render different templates when predicting using different models for html
 
-# load the models with pickle
+# load the models with pickle pip install -U Jinja2
 with open('models.pkl', 'rb') as f:
   best_log_reg, best_rf, best_knn, best_xgb = pickle.load(f)
 
@@ -73,8 +73,18 @@ async def testing(
    threshold = 0.5
    probability = best_log_reg.predict_proba(data).tolist()[0][1]
    default = (probability > threshold)
+   model = 'Logistic Regression'
 
-   return {'probability of default': probability, 'default': default}
+   if default:
+      pred = 'Borrower will default'
+   else:
+      pred = 'Borrower will not default'
+
+   return templates.TemplateResponse(
+      name='model.html',
+      request=request,
+      context={'pred': pred, 'probability': probability, 'threshold': threshold, 'model': model}
+   )
 
 # endpoint for using random forest to predict
 @app.post('/rf')
@@ -117,7 +127,18 @@ async def testing(
    probability = best_rf.predict_proba(data).tolist()[0][1]
    default = (probability > threshold)
 
-   return {'probability of default': probability, 'default': default}
+   model = 'Random Forest Classifier'
+
+   if default:
+      pred = 'Borrower will default'
+   else:
+      pred = 'Borrower will not default'
+
+   return templates.TemplateResponse(
+      name='model.html',
+      request=request,
+      context={'pred': pred, 'probability': probability, 'threshold': threshold, 'model': model}
+   )
 
 
 # endpoint for using knn to predict
@@ -161,7 +182,18 @@ async def testing(
    probability = best_knn.predict_proba(data).tolist()[0][1]
    default = (probability > threshold)
 
-   return {'probability of default': probability, 'default': default}
+   model = 'K Nearest Neighbours Classifier'
+
+   if default:
+      pred = 'Borrower will default'
+   else:
+      pred = 'Borrower will not default'
+
+   return templates.TemplateResponse(
+      name='model.html',
+      request=request,
+      context={'pred': pred, 'probability': probability, 'threshold': threshold, 'model': model}
+   )
 
 # endpoint for using xgb classifier to predict
 @app.post('/xgb')
@@ -204,4 +236,15 @@ async def testing(
    probability = best_xgb.predict_proba(data).tolist()[0][1]
    default = (probability > threshold)
 
-   return {'probability of default': probability, 'default': default}
+   model = 'XGB Classifier'
+
+   if default:
+      pred = 'Borrower will default'
+   else:
+      pred = 'Borrower will not default'
+
+   return templates.TemplateResponse(
+      name='model.html',
+      request=request,
+      context={'pred': pred, 'probability': probability, 'threshold': threshold, 'model': model}
+   )
