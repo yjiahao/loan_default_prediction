@@ -12,6 +12,7 @@ from features import Features
 # TODOS:
 # see if theres a better solution to shorten the forms input (like create a class or some shit)
 # beautify the landing page and the prediction page with Bootstrap
+# use Docker to deploy the model
 
 # load the models with pickle pip install -U Jinja2
 with open('models.pkl', 'rb') as f:
